@@ -23,8 +23,8 @@ Computationally, it is exceptionally efficient and based on a few integer hyperp
 We run all the experiments in `python 3.9`. To solve all dependencies, we recommend using Anaconda and creating a new environment.
 
 ```
-conda env create -f conda_env.yml
-conda activate nvarkernel_test
+conda env create -f environment.yml
+conda activate nvark
 ```
 
 For a quick example, run 'python main.py'. This executes an SVM classification on the JapaneseVowels dataset with the NVARk general setting.

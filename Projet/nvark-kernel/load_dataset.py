@@ -273,7 +273,7 @@ def preprocessing(
         ):
             TRAIN_x, TEST_x = zero_padding(TRAIN_x, TEST_x, T_new)
     # Encoding for labels
-    onehot_encoder = OneHotEncoder(sparse=False)
+    onehot_encoder = OneHotEncoder(sparse_output=False)
     TRAIN_y = np.argmax(
         onehot_encoder.fit_transform(TRAIN_y_raw.reshape(-1, 1)), axis=1
     )

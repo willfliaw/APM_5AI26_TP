@@ -6,9 +6,9 @@ dependencies:
   - cyl1tf
   - ipykernel
   - jupyter
+  - matplotlib
   - numpy
   - pandas
-  - pip
   - python
   - scikit-learn
   - scipy

@@ -38,7 +38,7 @@ Some exercises and projects require Python and relevant image processing librari
 1. Anaconda/Miniconda: Download and install Python with Anaconda or Miniconda from [Conda Official Site](https://docs.conda.io/en/latest/).
 2. Image Processing Libraries: Create a new conda environment with the necessary packages:
    ```bash
-   conda create -n nvark python pip numpy pandas scipy scikit-learn sktime cyl1tf ipykernel jupyter -c conda-forge
+   conda create -n nvark python matplotlib numpy pandas scikit-learn scipy sktime cyl1tf ipykernel jupyter -c conda-forge
    ```
 3. Activate the environment:
    ```bash

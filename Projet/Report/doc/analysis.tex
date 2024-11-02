@@ -1,1 +1,56 @@
 \chapter{Analysis} \label{chap:analysis}
+
+\section{Datasets}
+
+The selection of appropriate datasets plays a crucial role in the development, training, and evaluation of emotion recognition models. In this work, we utilize two widely recognized datasets that are frequently employed in the domain of speech and audiovisual emotion classification: the Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS) and the Berlin Database of Emotional Speech (Emo-DB). Both datasets contain emotionally expressive performances from professional actors, providing high-quality labeled data that is indispensable for benchmarking and advancing the capabilities of emotion classification systems. The following subsections provide a detailed description of each dataset, highlighting their key features, structure, and the rationale for their use in this study.
+
+\subsection{Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS)} % https://zenodo.org/records/1188976#.YFZuJ0j7SL8
+
+The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS) \cite{ravdess} is a widely recognized benchmark dataset utilized extensively in audiovisual emotion classification research \cite{anusha2021, vimal2021, abdullah2020}. The dataset consists of short audio and video recordings that feature both spoken and sung performances, enacted by a cohort of 24 actors (12 male and 12 female). Each recording is labeled with one of the following emotion categories: \textit{angry}, \textit{calm}, \textit{disgust}, \textit{fearful}, \textit{happy}, \textit{neutral}, \textit{sad}, and \textit{surprised}.
+
+To promote consistency and reproducibility, each actor delivers two predefined phrases in English: ``Kids are talking by the door'' and ``Dogs are sitting by the door.'' Apart from the neutral category, all emotions are expressed at two distinct intensity levels (normal and strong), with each instance repeated twice. These structured variations in emotional intensity, repetition, and diversity of vocal expressions make RAVDESS an invaluable asset for the development and validation of emotion recognition models in a wide range of applications.
+
+For the audio-only subset of the dataset which we employ for further analysis in the present work, there are a total of $1440$ speech recordings and $1012$ song recordings. It is worth noting that the singing subset is slightly smaller, as one actor's data is missing, and the emotions \textit{sad} and \textit{surprised} are not included for singing performances.
+
+Despite its favorable reception within the academic community, as demonstrated by its widespread adoption, evidence suggests that the application of RAVDESS in real-world scenarios may lead to underwhelming results \cite{churaev2021}. One possible explanation for this discrepancy is the issue of data leakage. Specifically, an overlap of similar samples between the training and validation sets may result in unintended information sharing, thereby artificially inflating performance metrics. This overestimation does not accurately reflect the generalizability and practical effectiveness of models when deployed in real-world environments.
+
+\subsection{Berlin Database of Emotional Speech} % http://www.emodb.bilderbar.info/download/
+
+The Berlin Database of Emotional Speech (Emo-DB) \cite{emodb}, akin to RAVDESS, is a well-regarded dataset for speech emotion classification tasks \cite{sinith2015, kotti2008, ying2010}. It comprises short spoken audio recordings performed by 10 professional actors (5 male and 5 female), each enacting various grammatical phrases in German, as detailed in Table~\ref{tab:emodb}. Each recording is annotated with one of the following emotion categories: \textit{anger}, \textit{anxiety/fear}, \textit{boredom}, \textit{disgust}, \textit{happiness}, \textit{neutral}, and \textit{sadness}.
+
+To ensure the quality and reliability of the dataset, these samples underwent evaluation by a significant number of listeners, who assessed the naturalness of the emotional expressions. In total, the dataset comprises $535$ speech files.
+
+\begin{center}
+    \begin{longtable}{*{2}{p{.45\linewidth}}}
+        \caption{Grammatical phrases in the Emo-DB dataset\label{tab:emodb}}                                                                                         \\
+        \specialrule{1.5pt}{2pt}{2pt}
+        German                                                                             & English                                                                 \\
+        \specialrule{0.3pt}{2pt}{2pt}
+        \endfirsthead
+
+        \specialrule{1.5pt}{2pt}{2pt}
+        German                                                                             & English                                                                 \\
+        \specialrule{0.3pt}{2pt}{2pt}
+        \endhead
+
+        \specialrule{0.3pt}{2pt}{2pt}
+        \multicolumn{2}{c}{{Continued on the next page}}                                                                                                             \\
+        \specialrule{0.3pt}{2pt}{2pt}
+        \endfoot
+        \endlastfoot
+
+        Der Lappen liegt auf dem Eisschrank.                                               & The cloth is on the refrigerator.                                       \\
+        Das will sie am Mittwoch abgeben.                                                  & She will deliver it on Wednesday.                                       \\
+        Heute abend könnte ich es ihm sagen.                                               & Tonight I could tell him.                                               \\
+        Das schwarze Stück Papier befindet sich da oben neben dem Holzstück.               & The black sheet of paper is located up there next to the piece of wood. \\
+        In sieben Stunden wird es soweit sein.                                             & In seven hours it will be time.                                         \\
+        Was sind denn das für Tüten, die da unter dem Tisch stehen?                        & What about the bags that are under the table?                           \\
+        Sie haben es gerade hochgetragen und jetzt gehen sie wieder runter.                & They just carried it upstairs and now they are going back down.         \\
+        An den Wochenenden bin ich jetzt immer nach Hause gefahren und habe Agnes besucht. & On weekends, I now always went home and visited Agnes.                  \\
+        Ich will das eben wegbringen und dann mit Karl was trinken gehen.                  & I will just take this away and then go have a drink with Karl.          \\
+        Die wird auf dem Platz sein, wo wir sie immer hinlegen.                            & It will be in the place where we always put it.                         \\
+        \specialrule{1.5pt}{2pt}{2pt}
+    \end{longtable}
+    Source: Own authorship
+\end{center}
+

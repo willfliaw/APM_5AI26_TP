@@ -13,3 +13,4 @@ dependencies:
   - scikit-learn
   - scipy
   - sktime
+  - librosa

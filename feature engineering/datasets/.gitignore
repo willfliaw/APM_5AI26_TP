@@ -1,0 +1,10 @@
+EmoDB/lablaut/*
+EmoDB/labsilb/*
+EmoDB/silb/*
+EmoDB/wav/*
+EmoDB/erkennung.txt
+EmoDB/erklaerung.txt
+RAVDESS/song/*/
+RAVDESS/speech/*/
+*.zip
+*.csv

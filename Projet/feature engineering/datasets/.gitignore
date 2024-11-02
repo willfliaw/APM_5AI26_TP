@@ -8,3 +8,8 @@ RAVDESS/song/*/
 RAVDESS/speech/*/
 *.zip
 *.csv
+*.tsv
+
+!EmoDB/wav/.gitkeep
+!RAVDESS/song/.gitkeep
+!RAVDESS/speech/.gitkeep

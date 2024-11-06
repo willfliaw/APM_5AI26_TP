@@ -23,9 +23,9 @@ warnings.filterwarnings("ignore")
 datasets_list = [  # ---univ---
     #   'SwedishLeaf',
     #   'CinCECGTorso',
-    'EmoDB',
+    # 'EmoDB',
     # ---multiv---
-    # 'RAVDESS'
+    'RAVDESS'
     # "JapaneseVowels",
     #   'UWaveGestureLibrary'
 ]

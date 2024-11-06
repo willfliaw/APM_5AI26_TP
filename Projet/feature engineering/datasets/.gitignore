@@ -6,6 +6,7 @@ EmoDB/erkennung.txt
 EmoDB/erklaerung.txt
 RAVDESS/song/*/
 RAVDESS/speech/*/
+HAR/*.ts
 HAR/train/*
 HAR/test/*
 *.zip

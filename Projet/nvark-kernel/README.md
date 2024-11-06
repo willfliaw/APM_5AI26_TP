@@ -35,7 +35,7 @@ More settings / experiments / datasets are available inside the code, just uncom
 If you find this code useful please consider citing our paper:
 
 ```
-@inproceedings{felice2023time,
+@inproceedings{felice2023,
   title={Time Series Kernels based on Nonlinear Vector AutoRegressive Delay Embeddings},
   author={Giovanni De Felice and John Y Goulermas and Vladimir Gusev},
   booktitle={Thirty-seventh Conference on Neural Information Processing Systems},

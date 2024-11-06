@@ -270,10 +270,10 @@ class NVARk(BaseEstimator):
                         s_min = [val for val in s_vals if val > thr][-1]
                         OCReP_reg = s_max * s_min
                         # print(i, ' ' ,OCReP_reg)
-                        if OCReP_reg < thr:
-                            print(i, " ", s_vals)
-                            raise RuntimeError("singular matrix")
-                            # lamb=1
+                        # if OCReP_reg < thr:
+                        #     print(i, " ", s_vals)
+                        #     raise RuntimeError("singular matrix")
+                        #     lamb=1
                         lamb = OCReP_reg
                     else:
                         lamb = self.lamb

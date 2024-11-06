@@ -23,9 +23,10 @@ warnings.filterwarnings("ignore")
 datasets_list = [  # ---univ---
     #   'SwedishLeaf',
     #   'CinCECGTorso',
-    # 'EmoDB',
+    # "EmoDB",
+    # "RAVDESS",
     # ---multiv---
-    'RAVDESS'
+    "HAR",
     # "JapaneseVowels",
     #   'UWaveGestureLibrary'
 ]
@@ -47,7 +48,7 @@ def clean_and_crop(_dataset, max_len=2000):
     dataset = dataset.applymap(lambda x: x.iloc[:max_len])
 
     # Apply numeric conversion after the cropping
-    dataset = dataset.applymap(pd.to_numeric, errors='coerce')
+    dataset = dataset.applymap(pd.to_numeric, errors="coerce")
 
     return dataset
 
@@ -57,18 +58,11 @@ def main():
     for dataset_name in datasets_list:
         print("Reading dataset: ", dataset_name)
 
-        TRAIN_x_raw, TRAIN_y_raw, TEST_x_raw, TEST_y_raw = load_dataset(
-            dataset_name)
-
-        # drop first problematic line
-        '''TRAIN_x_raw = TRAIN_x_raw.iloc[1:, :].reset_index(drop=True)
-        TRAIN_y_raw = TRAIN_y_raw[1:]
-        TEST_x_raw = TEST_x_raw.iloc[1:, :].reset_index(drop=True)
-        TEST_y_raw = TEST_y_raw[1:]'''
+        TRAIN_x_raw, TRAIN_y_raw, TEST_x_raw, TEST_y_raw = load_dataset(dataset_name)
 
         # make sure that the time series are float and crop to max length
-        TRAIN_x_raw = clean_and_crop(TRAIN_x_raw)
-        TEST_x_raw = clean_and_crop(TEST_x_raw)
+        # TRAIN_x_raw = clean_and_crop(TRAIN_x_raw)
+        # TEST_x_raw = clean_and_crop(TEST_x_raw)
 
         print("Dataset reading is completed")
 
@@ -119,8 +113,7 @@ def main():
             while k * s >= T_min_init:
                 k = k - 1
                 s = s - 1
-        params = {"k": k, "n": 2, "s": s, "n_dim": 75,
-                  "lamb": None, "gamma_mult": 1}
+        params = {"k": k, "n": 2, "s": s, "n_dim": 75, "lamb": None, "gamma_mult": 1}
 
         """ individual steps to output K tr-tr """
         # model        = NVARk(**params, repr_mode='ridge', random_state=1, verbose_lvl=2, solver=solver)
@@ -172,7 +165,15 @@ def main():
                 )
                 K_trtr = model.compute_Ktrtr(TRAIN_x_l)
                 K_tetr = model.compute_Ktetr(TEST_x_l, TRAIN_x_l)
-                labels_test, acc_test, acc_train, prec_train, rec_train, f1_train, best_C = tasks.my_SVMopt_classifier(
+                (
+                    labels_test,
+                    acc_test,
+                    acc_train,
+                    prec_train,
+                    rec_train,
+                    f1_train,
+                    best_C,
+                ) = tasks.my_SVMopt_classifier(
                     K_trtr,
                     TRAIN_y,
                     K_tetr,
@@ -195,11 +196,9 @@ def main():
                     best_test_acc = acc_test
 
             # create a final array : each column is a metric and each row is an iteration
-            train_results = np.array(
-                [train_acc_all, prec_all, rec_all, f1_all]).T
+            train_results = np.array([train_acc_all, prec_all, rec_all, f1_all]).T
 
-            np.save(f"results/{dataset_name}_testlabels.npy",
-                    np.array(best_labels))
+            np.save(f"results/{dataset_name}_testlabels.npy", np.array(best_labels))
 
             np.save(f"results/{dataset_name}_trainmetrics.npy", train_results)
 

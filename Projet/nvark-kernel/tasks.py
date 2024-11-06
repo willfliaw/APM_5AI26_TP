@@ -174,6 +174,8 @@ def my_SVMopt_classifier(
 
     best_i = np.argmax(acc_over_pars[:, 1])  # uses accuracy to find best C
     best_C = acc_over_pars[best_i, 0]
+    # best_i = np.argmax(f1_over_pars[:, 1])  # uses accuracy to find best C
+    # best_C = f1_over_pars[best_i, 0]
     acc_train = acc_over_pars[best_i, 1]
     prec_train = prec_over_pars[best_i, 1]
     rec_train = rec_over_pars[best_i, 1]

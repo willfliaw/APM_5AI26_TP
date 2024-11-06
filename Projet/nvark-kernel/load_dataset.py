@@ -16,7 +16,7 @@ def load_dataset(dataset_name):
     # load from archives
     success = False
 
-    # read KM datasets
+    # read KM and HAR datasets
     try:
         TRAIN_x_raw, TRAIN_y_raw = load_from_ucr_tsv_to_dataframe(
             "datasets/KM/"
@@ -31,6 +31,25 @@ def load_dataset(dataset_name):
             + "/"
             + dataset_name
             + "_TEST.tsv"
+        )
+        success = True
+    except:
+        pass
+
+    try:
+        TRAIN_x_raw, TRAIN_y_raw = load_from_tsfile(
+            "datasets/"
+            + dataset_name
+            + "/"
+            + dataset_name
+            + "_TRAIN.ts"
+        )
+        TEST_x_raw, TEST_y_raw = load_from_tsfile(
+            "datasets/"
+            + dataset_name
+            + "/"
+            + dataset_name
+            + "_TEST.ts"
         )
         success = True
     except:

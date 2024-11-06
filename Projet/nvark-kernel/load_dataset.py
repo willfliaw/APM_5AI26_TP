@@ -15,6 +15,28 @@ from sklearn.preprocessing import OneHotEncoder
 def load_dataset(dataset_name):
     # load from archives
     success = False
+
+    # read KM datasets
+    try:
+        TRAIN_x_raw, TRAIN_y_raw = load_from_ucr_tsv_to_dataframe(
+            "datasets/KM/"
+            + dataset_name
+            + "/"
+            + dataset_name
+            + "_TRAIN.tsv"
+        )
+        TEST_x_raw, TEST_y_raw = load_from_ucr_tsv_to_dataframe(
+            "datasets/KM/"
+            + dataset_name
+            + "/"
+            + dataset_name
+            + "_TEST.tsv"
+        )
+        success = True
+    except:
+        pass
+
+    ################
     try:
         TRAIN_x_raw, TRAIN_y_raw = load_from_ucr_tsv_to_dataframe(
             "datasets/UCR 2018 Archive/"
@@ -84,6 +106,16 @@ def dataset_has_nans(_dataset):
         lambda series: (np.array(np.isnan(series)) == True).any()
     )
     return dataset.values.any()
+
+
+'''def dataset_has_nans(_dataset):
+    ""alternative implementation by Paulo""
+    dataset = _dataset.copy()
+    
+    dataset = dataset.applymap(
+        lambda series: series.isna().any() 
+    )
+    return dataset.values.any()'''
 
 
 def different_lengths(_dataset):
@@ -277,6 +309,7 @@ def preprocessing(
     TRAIN_y = np.argmax(
         onehot_encoder.fit_transform(TRAIN_y_raw.reshape(-1, 1)), axis=1
     )
-    TEST_y = np.argmax(onehot_encoder.transform(TEST_y_raw.reshape(-1, 1)), axis=1)
+    TEST_y = np.argmax(onehot_encoder.transform(
+        TEST_y_raw.reshape(-1, 1)), axis=1)
 
     return TRAIN_x, TRAIN_y, TEST_x, TEST_y

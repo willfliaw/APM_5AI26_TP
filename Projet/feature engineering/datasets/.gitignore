@@ -6,6 +6,7 @@ EmoDB/erkennung.txt
 EmoDB/erklaerung.txt
 RAVDESS/song/*/
 RAVDESS/speech/*/
+HAR/*
 *.zip
 *.csv
 *.tsv
@@ -14,3 +15,5 @@ RAVDESS/speech/*/
 !EmoDB/wav/.gitkeep
 !RAVDESS/song/.gitkeep
 !RAVDESS/speech/.gitkeep
+!HAR/train/.gitkeep
+!HAR/test/.gitkeep

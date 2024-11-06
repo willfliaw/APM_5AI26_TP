@@ -2,11 +2,48 @@ import numpy as np
 
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedShuffleSplit
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # SVM
 
 
+def my_SVM_classifier(
+        train,
+        Ktrtr,
+        Ktetr,
+        TRAIN_y,
+        TEST_y,
+        svm_C,
+        verbose=True):
+    '''Runs SVM with precomputed kernel for test set and saves results in a csv for posterior analysis'''
+    svm = SVC(
+        C=svm_C,
+        kernel="precomputed",
+        class_weight=None,
+        decision_function_shape="ovr",
+        cache_size=500,
+    )
+
+    svm.fit(Ktrtr, TRAIN_y)
+    labels_pred = svm.predict(Ktetr)
+    accuracy = accuracy_score(TEST_y, labels_pred)
+
+    if train == True:
+        precision = precision_score(TEST_y, labels_pred, average='weighted')
+        recall = recall_score(TEST_y, labels_pred, average='weighted')
+        f1 = f1_score(TEST_y, labels_pred, average='weighted')
+
+        if verbose:
+            print("SVM Accuracy = %.3f" % (accuracy))
+
+        return accuracy, precision, recall, f1
+    else:
+        return labels_pred, accuracy
+
+############################################################################################################
+
+
+'''
 def my_SVM_classifier(Ktrtr, Ktetr, TRAIN_y, TEST_y, svm_C, verbose=True):
     """perform SVM classification with precomputed kernel
 
@@ -58,8 +95,103 @@ def my_SVM_classifier(Ktrtr, Ktetr, TRAIN_y, TEST_y, svm_C, verbose=True):
     if verbose:
         print("SVM Accuracy = %.3f" % (accuracy))
     return accuracy
+'''
 
 
+def my_SVMopt_classifier(
+    Ktrtr,
+    TRAIN_y,
+    Ktetr=None,
+    TEST_y=[],
+    svm_C_list=[5.0],
+    random_state=1234,
+    n_folds=10,
+    val_size=0.3,
+    verbose=False,
+):
+    """perform SVM classification with precomputed kernel, optimizing some parameters
+
+    Parameters:
+        Ktrtr   (N_train x N_train):  train-train kernel matrix
+        Ktetr   (N_test x N_train):   test-train kernel matrix
+        TRAIN_y (N_test x N_labels):  train labels
+        TEST_y  (N_test x N_labels):  test labels
+        svm_C_list     (list):        list of alloweed values
+
+    Returns:
+        acc_test       (float): SVM classification accuracy on test with best values
+        acc_train      (float): SVM classification accuracy on train with best values
+        svm_C_best     (float): best C
+    """
+    acc_over_pars = np.zeros((len(svm_C_list), 2))
+    prec_over_pars = np.zeros((len(svm_C_list), 2))
+    rec_over_pars = np.zeros((len(svm_C_list), 2))
+    f1_over_pars = np.zeros((len(svm_C_list), 2))
+
+    # split the training data into stratified randomized folds
+    sss = StratifiedShuffleSplit(
+        n_splits=n_folds, test_size=val_size, random_state=random_state
+    )
+
+    # split the training data into stratified randomized folds
+    # sss = StratifiedKFold(n_splits=n_splits)
+
+    for i, C in enumerate(svm_C_list):
+        acc_over_folds = []
+        prec_over_folds = []
+        rec_over_folds = []
+        f1_over_folds = []
+
+        for cv_train_i, cv_test_i in sss.split(np.arange(Ktrtr.shape[0]), TRAIN_y):
+            cv_train_i = np.sort(cv_train_i)
+            cv_test_i = np.sort(cv_test_i)
+            # pick Ktrtr and split into train
+            Ktrtr_fold = Ktrtr[cv_train_i, :]
+            Ktrtr_fold = Ktrtr_fold[:, cv_train_i]
+            TRAIN_y_fold = TRAIN_y[cv_train_i]
+            # and test
+            Ktetr_fold = Ktrtr[cv_test_i, :]
+            Ktetr_fold = Ktetr_fold[:, cv_train_i]
+            TEST_y_fold = TRAIN_y[cv_test_i]
+
+            acc_fold, prec_fold, rec_fold, f1_fold = my_SVM_classifier(
+                True, Ktrtr_fold, Ktetr_fold, TRAIN_y_fold, TEST_y_fold, C, verbose=False
+            )
+            acc_over_folds.append(acc_fold)
+            prec_over_folds.append(prec_fold)
+            rec_over_folds.append(rec_fold)
+            f1_over_folds.append(f1_fold)
+
+        mean_acc = np.mean(acc_over_folds)
+        mean_prec = np.mean(prec_over_folds)
+        mean_rec = np.mean(rec_over_folds)
+        mean_f1 = np.mean(f1_over_folds)
+
+        acc_over_pars[i, :] = [C, mean_acc]
+        prec_over_pars[i, :] = [C, mean_prec]
+        rec_over_pars[i, :] = [C, mean_rec]
+        f1_over_pars[i, :] = [C, mean_f1]
+
+    best_i = np.argmax(acc_over_pars[:, 1])  # uses accuracy to find best C
+    best_C = acc_over_pars[best_i, 0]
+    acc_train = acc_over_pars[best_i, 1]
+    prec_train = prec_over_pars[best_i, 1]
+    rec_train = rec_over_pars[best_i, 1]
+    f1_train = f1_over_pars[best_i, 1]
+
+    if verbose:
+        print("SVM Accuracy on Train = %.3f" % (acc_train))
+
+    # calculate accuracy on test if given
+    acc_test = None
+    if Ktetr is not None and TEST_y is not []:
+        labels_test, acc_test = my_SVM_classifier(
+            False, Ktrtr, Ktetr, TRAIN_y, TEST_y, best_C, verbose=verbose
+        )
+    return labels_test, acc_test, acc_train, prec_train, rec_train, f1_train, best_C
+
+
+'''
 def my_SVMopt_classifier(
     Ktrtr,
     TRAIN_y,
@@ -132,4 +264,4 @@ def my_SVMopt_classifier(
         acc_test = my_SVM_classifier(
             Ktrtr, Ktetr, TRAIN_y, TEST_y, best_C, verbose=verbose
         )
-    return acc_test, acc_train, best_C
+    return acc_test, acc_train, best_C'''

@@ -60,6 +60,12 @@ def main():
         TRAIN_x_raw, TRAIN_y_raw, TEST_x_raw, TEST_y_raw = load_dataset(
             dataset_name)
 
+        # drop first problematic line
+        '''TRAIN_x_raw = TRAIN_x_raw.iloc[1:, :].reset_index(drop=True)
+        TRAIN_y_raw = TRAIN_y_raw[1:]
+        TEST_x_raw = TEST_x_raw.iloc[1:, :].reset_index(drop=True)
+        TEST_y_raw = TEST_y_raw[1:]'''
+
         # make sure that the time series are float and crop to max length
         TRAIN_x_raw = clean_and_crop(TRAIN_x_raw)
         TEST_x_raw = clean_and_crop(TEST_x_raw)
@@ -141,7 +147,15 @@ def main():
         """ NVARk GENERAL SETTING """
         if experiment == "SVM_NVARk":
             # mean over more iters
-            accuracy = []
+            best_test_acc = 0
+            best_labels = []
+
+            test_acc_all = []
+            train_acc_all = []
+            prec_all = []
+            rec_all = []
+            f1_all = []
+
             for i in range(1, random_iterations + 1):
                 print(f"iteration {i}")
                 if i == 1:
@@ -158,7 +172,7 @@ def main():
                 )
                 K_trtr = model.compute_Ktrtr(TRAIN_x_l)
                 K_tetr = model.compute_Ktetr(TEST_x_l, TRAIN_x_l)
-                acc_test, acc_train, best_C = tasks.my_SVMopt_classifier(
+                labels_test, acc_test, acc_train, prec_train, rec_train, f1_train, best_C = tasks.my_SVMopt_classifier(
                     K_trtr,
                     TRAIN_y,
                     K_tetr,
@@ -169,12 +183,31 @@ def main():
                     val_size=0.33,
                     verbose=False,
                 )
-                accuracy.append(acc_test)
+
+                test_acc_all.append(acc_test)
+                train_acc_all.append(acc_train)
+                prec_all.append(prec_train)
+                rec_all.append(rec_train)
+                f1_all.append(f1_train)
+
+                if acc_test > best_test_acc:
+                    best_labels = labels_test
+                    best_test_acc = acc_test
+
+            # create a final array : each column is a metric and each row is an iteration
+            train_results = np.array(
+                [train_acc_all, prec_all, rec_all, f1_all]).T
+
+            np.save(f"results/{dataset_name}_testlabels.npy",
+                    np.array(best_labels))
+
+            np.save(f"results/{dataset_name}_trainmetrics.npy", train_results)
+
             print(
-                "accuracy = ",
-                round(np.mean(accuracy), 3),
+                "mean test accuracy = ",
+                round(np.mean(test_acc_all), 3),
                 " +- ",
-                round(np.std(accuracy), 3),
+                round(np.std(test_acc_all), 3),
             )
 
         """ NVARk* OPTIMIZED SETTING """

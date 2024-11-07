@@ -19,18 +19,10 @@ def load_dataset(dataset_name):
     # read KM and HAR datasets
     try:
         TRAIN_x_raw, TRAIN_y_raw = load_from_ucr_tsv_to_dataframe(
-            "datasets/KM/"
-            + dataset_name
-            + "/"
-            + dataset_name
-            + "_TRAIN.tsv"
+            "datasets/KM/" + dataset_name + "/" + dataset_name + "_TRAIN.tsv"
         )
         TEST_x_raw, TEST_y_raw = load_from_ucr_tsv_to_dataframe(
-            "datasets/KM/"
-            + dataset_name
-            + "/"
-            + dataset_name
-            + "_TEST.tsv"
+            "datasets/KM/" + dataset_name + "/" + dataset_name + "_TEST.tsv"
         )
         success = True
     except:
@@ -38,18 +30,10 @@ def load_dataset(dataset_name):
 
     try:
         TRAIN_x_raw, TRAIN_y_raw = load_from_tsfile(
-            "datasets/"
-            + dataset_name
-            + "/"
-            + dataset_name
-            + "_TRAIN.ts"
+            "datasets/" + dataset_name + "/" + dataset_name + "_TRAIN.ts"
         )
         TEST_x_raw, TEST_y_raw = load_from_tsfile(
-            "datasets/"
-            + dataset_name
-            + "/"
-            + dataset_name
-            + "_TEST.ts"
+            "datasets/" + dataset_name + "/" + dataset_name + "_TEST.ts"
         )
         success = True
     except:
@@ -127,14 +111,14 @@ def dataset_has_nans(_dataset):
     return dataset.values.any()
 
 
-'''def dataset_has_nans(_dataset):
+"""def dataset_has_nans(_dataset):
     ""alternative implementation by Paulo""
     dataset = _dataset.copy()
-    
+
     dataset = dataset.applymap(
-        lambda series: series.isna().any() 
+        lambda series: series.isna().any()
     )
-    return dataset.values.any()'''
+    return dataset.values.any()"""
 
 
 def different_lengths(_dataset):
@@ -328,7 +312,6 @@ def preprocessing(
     TRAIN_y = np.argmax(
         onehot_encoder.fit_transform(TRAIN_y_raw.reshape(-1, 1)), axis=1
     )
-    TEST_y = np.argmax(onehot_encoder.transform(
-        TEST_y_raw.reshape(-1, 1)), axis=1)
+    TEST_y = np.argmax(onehot_encoder.transform(TEST_y_raw.reshape(-1, 1)), axis=1)
 
     return TRAIN_x, TRAIN_y, TEST_x, TEST_y

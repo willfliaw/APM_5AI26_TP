@@ -7,15 +7,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # SVM
 
 
-def my_SVM_classifier(
-        train,
-        Ktrtr,
-        Ktetr,
-        TRAIN_y,
-        TEST_y,
-        svm_C,
-        verbose=True):
-    '''Runs SVM with precomputed kernel for test set and saves results in a csv for posterior analysis'''
+def my_SVM_classifier(train, Ktrtr, Ktetr, TRAIN_y, TEST_y, svm_C, verbose=True):
+    """Runs SVM with precomputed kernel for test set and saves results in a csv for posterior analysis"""
     svm = SVC(
         C=svm_C,
         kernel="precomputed",
@@ -29,9 +22,9 @@ def my_SVM_classifier(
     accuracy = accuracy_score(TEST_y, labels_pred)
 
     if train == True:
-        precision = precision_score(TEST_y, labels_pred, average='weighted')
-        recall = recall_score(TEST_y, labels_pred, average='weighted')
-        f1 = f1_score(TEST_y, labels_pred, average='weighted')
+        precision = precision_score(TEST_y, labels_pred, average="weighted")
+        recall = recall_score(TEST_y, labels_pred, average="weighted")
+        f1 = f1_score(TEST_y, labels_pred, average="weighted")
 
         if verbose:
             print("SVM Accuracy = %.3f" % (accuracy))
@@ -39,6 +32,7 @@ def my_SVM_classifier(
         return accuracy, precision, recall, f1
     else:
         return labels_pred, accuracy
+
 
 ############################################################################################################
 
@@ -155,7 +149,13 @@ def my_SVMopt_classifier(
             TEST_y_fold = TRAIN_y[cv_test_i]
 
             acc_fold, prec_fold, rec_fold, f1_fold = my_SVM_classifier(
-                True, Ktrtr_fold, Ktetr_fold, TRAIN_y_fold, TEST_y_fold, C, verbose=False
+                True,
+                Ktrtr_fold,
+                Ktetr_fold,
+                TRAIN_y_fold,
+                TEST_y_fold,
+                C,
+                verbose=False,
             )
             acc_over_folds.append(acc_fold)
             prec_over_folds.append(prec_fold)

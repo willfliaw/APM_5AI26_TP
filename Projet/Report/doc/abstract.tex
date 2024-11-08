@@ -1,9 +1,10 @@
 \begin{abstract}
 
-In this work we study the...
+In this work, we study a Nonlinear Vector Autoregressive (NVAR) kernel for time-series and its use in the supervised classification framework, as proposed at NeurIPS 2023 \cite{felice2023}. The NVAR kernel represents a novel approach to time-series kernel design, combining principles from reservoir computing (RC) with delay embedding techniques rooted in dynamical systems theory. This integration enables efficient and interpretable representation of both univariate and multivariate time-series data, addressing challenges often encountered with traditional RC-based models.
 
-\vspace{1\baselineskip}
+Our study involves implementing and evaluating the NVAR kernel on three distinct datasets: Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS) and Berlin Database of Emotional Speech (Emo-DB) for emotion classification task and finally Human Activity Recognition Using Smartphones (HAR) for human activity recognition task. Performance is assessed through accuracy, precision, recall, and F1-score, with additional analyses on computational efficiency and robustness to class imbalances.
+Results indicate that while the NVAR kernel performs well with high-arousal emotions and distinct physical activities, it faces challenges with nuanced emotional states and static activities. These findings suggest potential areas for enhancement, particularly in adapting the kernel for complex, high-dimensional, and imbalanced datasets. Finally, the NVAR kernel proves to be a viable approach for time-efficient pipelines, as it avoids the extensive training and inference required by neural networks, making it suitable for problems where a lower accuracy is acceptable.
 
-\textbf{Keywords:} KEYWORD. KEYWORD.
+\textbf{Keywords}: NVAR kernel, time-series classification, reservoir computing, delay embeddings, human activity recognition, emotion recognition.
 
 \end{abstract}

@@ -43,6 +43,8 @@
 % - abnt-title-command=yes: Enable \citeauthor and \citetitle commands for citing only the author or the title.
 % - abnt-emphasize=bf: Emphasize the author's name in bold in citations.
 \usepackage[alf,abnt-repeated-author-omit=yes,abnt-title-command=yes,abnt-emphasize=bf]{abntex2cite}
+% \usepackage{cite}
+% \bibliographystyle{apalike}
 
 % Proper formatting and line breaking for URLs
 \usepackage{url}
@@ -105,10 +107,10 @@
 \begin{document}
 
 % Author information
-\customAuthor{Paulo Moura, William Liaw}
+\customAuthor{Paulo Roberto DE MOURA JÚNIOR, William LIAW}
 
 % Title of the document
-\customTitle{Analyzing and Extending Time Series Kernels based on Nonlinear Vector AutoRegressive Delay Embeddings}
+\customTitle{Analyzing and Extending Time Series Kernels based on Nonlinear Vector Autoregressive Delayed Embeddings}
 
 % Advisor information
 \advisor{Prof. Florence D'Alché}
@@ -117,11 +119,11 @@
 \minipageText{This report is based on the paper \cite{felice2023}, published at NeurIPS 2023.}
 
 % Location and date
-\location{Palaiseau}
+\location{Palaiseau, France}
 \customDate{2024}
 
 % Generate the cover and back cover pages
-\coverPage{}
+% \coverPage{}
 \backCover{}
 
 % Set page numbering to roman numerals for pre-textual elements
@@ -147,5 +149,7 @@
 \include{doc/results}
 \include{doc/conclusion}
 \bibliography{doc/bibliography}
+\appendix
+\include{doc/appA}
 
 \end{document}

@@ -1,0 +1,23 @@
+\chapter{How to run our code} \label{app:A}
+We describe below how to run the project's pipeline in a local machine assuming Anaconda is already installed and updated to the last version.
+\begin{enumerate}
+ \item Download the RAVDESS, Emo-DB, and HAR compressed files, extract them, and place their contents into their respective named sub-folders within the ``feature engineering'' folder.
+\item Create a conda environment for installing dependencies and running the python scripts of the project, running the commands below.
+\begin{verbatim}
+conda env create -f environment.yml
+conda activate nvark
+\end{verbatim}
+
+\item Run ``feature\_engineering.ipynb'' inside the ``feature engineering'' folder to generate train and test files for each dataset.
+\item Copy generated files to the correct directories: 
+\begin{enumerate}
+ \item ``RAVDESS\_TRAIN.tsv'', ``RAVDESS\_TEST.tsv'' files to ``nvark-kernel/\\datasets/KM/RAVDESS'' folder.
+\item ``EmoDB\_TRAIN.tsv'', ``EmoDB\_TEST.tsv'' to ``nvark-kernel/datasets/KM/\\EmoDB'' folder.
+\item ``HAR\_TRAIN.ts'', ``HAR\_TEST.ts'' to ``nvark-kernel/datasets/HAR'' folder.
+\end{enumerate}
+\item Specify the desired dataset to run experiments on the field ``datasets\_list'' in the top of ``main.py'' script of ``nvark-kernel'' folder. 
+\item Run ``main.py'' inside of ``nvark-kernel'' folder.
+\item To analyze results, copy the ``.npy'' files from ``nvark-kernel/results'' to ``results-analysis/acc'' folder.
+\item Run ``analysis\_acc.ipynb'' script inside ``results-analysis/acc'' folder.
+    
+\end{enumerate}

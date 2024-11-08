@@ -1,3 +1,9 @@
 \chapter{Conclusion} \label{chap:conclusion}
 
-In this work we have considered ...
+This study provides a comprehensive evaluation of the NVAR kernel for time-series classification, building on the innovative approach of \cite{felice2023}. The NVAR kernel leverages delay embeddings to capture underlying temporal dynamics, offering a computationally efficient alternative to traditional RC-based models. Applied to UTS and MTS, our experiments reveal that the NVAR kernel achieves high classification accuracy for distinct, well-separated classes, such as high-arousal emotions and dynamic physical activities, demonstrating its robustness and practical applicability.
+
+The state-of-the-art classification methods are based on complex neural networks architectures  and yield top accuracies of 87\% for RAVDESS, 90\% for Emo-DB and 99.5\% for HAR \cite{luna2021multimodal, emodb_perf, har_perf}. The accuracies achieved in this work with NVAR kernel SVM are 42\% for RAVDESS, 53\% Emo-DB and 93\% for HAR. Considering that the training and inference of a neural network is computationally expensive, the NVAR kernel SVM shows an advantage in terms of time efficiency, yielding acceptable results for classification in much shorter running time.
+
+However, the NVAR kernel shows certain limitations. It is efficient in using a heuristic approach to determine hyperparameters that may not always provide a good representation for datasets with complicate overlapping classes. This is mainly evident in tasks with subtle emotional states and static physical activities, wherein misclassification rates remain high. Moreover, the sensitivity of the kernel to the class imbalance and some high-dimensional data difficulties marked some research areas that required more work. 
+
+Future work could focus on improving the hyperparameter tuning process of the NVAR kernel, possibly incorporating adaptive delay embeddings or feature selection strategies to improve performance in more complex settings. An outstanding area for further investigation would involve advanced classifiers or alternative augmentation techniques from a perspective of balanced class distribution.

@@ -42,9 +42,9 @@
 % - abnt-repeated-author-omit=yes: Omit repeated authors in the bibliography, replacing them with a dash (---).
 % - abnt-title-command=yes: Enable \citeauthor and \citetitle commands for citing only the author or the title.
 % - abnt-emphasize=bf: Emphasize the author's name in bold in citations.
-\usepackage[alf,abnt-repeated-author-omit=yes,abnt-title-command=yes,abnt-emphasize=bf]{abntex2cite}
-% \usepackage{cite}
-% \bibliographystyle{apalike}
+% \usepackage[alf,abnt-repeated-author-omit=yes,abnt-title-command=yes,abnt-emphasize=bf]{abntex2cite}
+\usepackage{cite}
+\bibliographystyle{apalike}
 
 % Proper formatting and line breaking for URLs
 \usepackage{url}
@@ -122,7 +122,7 @@
 \location{Palaiseau, France}
 \customDate{2024}
 
-% Generate the cover and back cover pages
+% Generate back cover page
 % \coverPage{}
 \backCover{}
 
@@ -131,13 +131,6 @@
 
 % Include other pre-textual elements (acknowledgement, abstract)
 \include{doc/abstract}
-
-% List of Figures and Tables
-% \listoffigures
-% \listoftables
-
-% \include{doc/abbreviations}
-% \include{doc/symbols}
 
 \tableofcontents
 

@@ -1,0 +1,20 @@
+__pycache__
+Projet/feature engineering/datasets/EmoDB/lablaut/*
+Projet/feature engineering/datasets/EmoDB/labsilb/*
+Projet/feature engineering/datasets/EmoDB/silb/*
+Projet/feature engineering/datasets/EmoDB/wav/*
+Projet/feature engineering/datasets/EmoDB/erkennung.txt
+Projet/feature engineering/datasets/EmoDB/erklaerung.txt
+Projet/feature engineering/datasets/RAVDESS/song/*/
+Projet/feature engineering/datasets/RAVDESS/speech/*/
+Projet/feature engineering/datasets/HAR/*.ts
+Projet/feature engineering/datasets/HAR/train/*
+Projet/feature engineering/datasets/HAR/test/*
+Projet/nvark-kernel/datasets/HAR/*.ts
+Projet/nvark-kernel/datasets/EmoDB/*.tsv
+Projet/nvark-kernel/datasets/RAVDESS/*.tsv
+*.zip
+*.csv
+*.tsv
+*.7z
+*.npy
